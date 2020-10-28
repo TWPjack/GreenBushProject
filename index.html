@@ -1,28 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        .all{
+        .all {
+            width: 1500px;
+            height: 900px;
+            margin: auto;
+            background: rgb(255, 210, 210);
+        }
+        .iframe{
+            background-color: aqua;
             width: 1024px;
             height: 768px;
-            margin: auto;
-            background: red;
-        }
-        iframe{
             position: absolute;
             left: 20%;
             top: 15%;
         }
     </style>
 </head>
+
 <body>
     <div class="all">
-    <a href="index.html" >回首頁</a>
-    <a href="jump_game,html" target="iframe" >小恐龍遊戲</a>
-    <iframe name="iframe" src="" frameborder="0" width="1024px" height="768px" ></iframe>
+        <ul>
+            <li><a href="index.html">回首頁</a></li>
+            <li><a href="easy_game/jump_game.html" target="iframe">小恐龍遊戲</a></li>
+            <li><a href="easy_game/Snake_game.html" target="iframe">貪食蛇</a></li>
+        </ul>
+        <div class="iframe">
+            <iframe name="iframe" src="" frameborder="0" width="1024px" height="768px"></iframe>
+        </div>
     </div>
 </body>
+
 </html>

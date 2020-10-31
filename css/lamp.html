@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Lamp</title>
+    <style>
+        body{
+            background-color: #fae3af;
+            padding: 0;
+            margin: 0;
+        }
+
+        main{
+            height: 350px;
+            width: 350px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+        }
+
+        .lamp{
+            height: 20px;
+            width: 140px;
+            position: absolute;
+            background-color: #f28f3e;
+            border-radius: 8px 8px 0 0;
+            bottom: 0;
+            left: 70px;
+        }
+
+        .lamp::before{
+            content: '';
+            position: absolute;
+            height: 5px;
+            width: 60px;
+            background-color: rgba(255, 255, 255, 0);
+            top: 8px;
+            left: 8px;
+            border-radius: 8px;
+        }
+
+        .square-support-brace{
+            width: 20px;
+            height: 20px;
+            background-color: #ff764e;
+            position: absolute;
+            top: -20px;
+            left: 35px;
+            z-index: -1;
+        }
+
+        .triangle-support-brace-1{
+            font-size: .8em;
+            position: relative;
+            width: 3.8em;
+            height: 3.8em;
+            text-align: center;
+            margin: 10% auto 0;
+            border-radius: 100%;
+            overflow: hidden;
+            bottom: 70px;
+            left: -30px;
+        }
+
+        .triangle-support-brace-1::before{
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: solid 2em transparent;
+            border-bottom-color: orange;
+            border-bottom-width: 3.2em;
+            border-top-width: 0;
+            margin: -.3em -2em;
+        }
+
+        .circle-support-brace{
+            background-color: #F28F3E;
+            width: 35px;
+            height: 25px;
+            border-radius: 125px 125px 0 0;
+            transform: rotate(110deg);
+            bottom: 150px;
+            left: -30px;
+            position: absolute;
+        }
+
+        .stand-1{
+            height: 120px;
+            width: 8px;
+            position: absolute;
+            border-right: solid 4px #31565c;
+            border-left: solid 4px #31565c;
+            transform: rotate(-25deg);
+            top: -140px;
+            right: 120px;
+            z-index: -1;
+        }
+
+        .stand-2{
+            height: 120px;
+            width: 8px;
+            position: absolute;
+            border-right: solid 4px #31565c;
+            border-left: solid 4px #31565c;
+            transform: rotate(60deg);
+            top: -240px;
+            right: 90px;
+            z-index: -1;
+        }
+
+        .triangle-support-brace-2 {
+            font-size: .8em;
+            position: relative;
+            width: 3.8em;
+            height: 3.8em;
+            text-align: center;
+            margin: 10% auto 0;
+            border-radius: 100%;
+            transform: rotate(-30deg);
+            overflow: hidden;
+            bottom: 305px;
+            left: 25px;
+        }
+
+        .triangle-support-brace-2::before{
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: solid 2em transparent;
+            border-bottom-color: orange;
+            border-bottom-width: 3.2em;
+            border-top-width: 0;
+            margin: -.3em -2em;
+        }
+
+        .lamp-shade{
+            background-color: #F28F3E;
+            width: 100px;
+            height: 50px;
+            position: absolute;
+            bottom: 220px;
+            left: 110px;
+            border-radius: 125px 125px 0 0;
+            transform: rotate(-35deg);
+        }
+
+        .wire1{
+            position: absolute;
+            border: 6px solid transparent;
+            border-top: 5px solid #31565c;
+            border-radius: 50%;
+            top: -290px;
+            left: 127px;
+            width: 35px;
+            height: 100px;
+            transform: rotate(-70deg);
+        }
+
+        .wire2 {
+            position: absolute;
+            border: 5px solid transparent;
+            border-top: 5px solid #31565c;
+            border-radius: 50%;
+            top: -250px;
+            left: 70px;
+            width: 30px;
+            height: 30px;
+            transform: rotate(100deg);
+        }
+
+        .wire3 {
+            position: absolute;
+            border: 5px solid transparent;
+            border-top: 5px solid #31565c;
+            border-radius: 50%;
+            top: -259px;
+            left: 90px;
+            width: 50px;
+            height: 30px;
+            transform: rotate(30deg);
+        }
+
+        .shade-support{
+            background-color: #E9A14D;
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            bottom: 240px;
+            left: 120px;
+            border-radius: 125px 125px 0 0;
+            transform: rotate(-35deg);
+        }
+
+        .light-bulb {
+            width: 30px;
+            height: 30px;
+            background: white;
+            position: absolute;
+            bottom: 210px;
+            left: 160px;
+            border-radius: 50%;
+        }
+
+        .table {
+            width: 800px;
+            height: 6px;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            background-color: #3a5765;
+        }
+
+        input[type='checkbox'] {
+            -webkit-appearance: none;
+            outline: none;
+            height: 12px;
+            width: 18px;
+            position: absolute;
+            background-color: #31565c;
+            border-radius: 3px 3px 0 0;
+            bottom: 13px;
+            left: 100px;
+            z-index: -1;
+        }
+
+        input[type='checkbox']::before {
+            content: '';
+            position: absolute;
+            height: 0;
+            width: 80px;
+            border-bottom: 255px solid #fbeabf;
+            border-right: 400px solid transparent;
+            transform: skew(10deg);
+            bottom: -15px;
+            left: 45px;
+            display: none;
+        }
+
+        input[type='checkbox']:checked::before {
+            display: block;
+            
+        }
+        
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+    <main>
+        <div class="lamp">
+            <div class="triangle-support-brace-1"></div>
+            <div class="square-support-brace"></div>
+            <div class="circle-support-brace"></div>
+            <div class="stand-1"></div>
+            <div class="stand-2"></div>
+            <div class="wire1"></div>
+            <div class="wire2"></div>
+            <div class="wire3"></div>
+            <div class="triangle-support-brace-2"></div>
+            <div class="shade-support"></div>
+            <div class="light-bulb"></div>
+            <div class="lamp-shade"></div>
+            <input type="checkbox">
+        </div>
+        <div class="table"></div>
+
+    </main>
+    
+</body>
+</html>

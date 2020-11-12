@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    .dial {
+      height: 400px;
+      width: 400px;
+    }
+
+    .controls {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .timer {
+      position: relative;
+      display: inline-block;
+    }
+
+    body {
+      background: #23074d;
+      /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #cc5333, #23074d);
+      /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #cc5333, #23074d);
+      /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      font-family: Poppins;
+    }
+
+    .container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer input {
+      display: block;
+      border: none;
+      width: 240px;
+      font-size: 90px;
+      text-align: center;
+      background: transparent;
+      color: #fff;
+    }
+
+    .timer h1 {
+      text-align: center;
+      color: #fff;
+      margin-top: 30px;
+    }
+
+    .timer button {
+      border: none;
+      font-size: 36px;
+      cursor: pointer;
+    }
+
+    .timer button:focus {
+      outline: none;
+    }
+
+    .timer input:focus {
+      outline: none;
+    }
+
+    button {
+      background: transparent;
+      color: #fff;
+    }
+
+    circle {
+      stroke: #fff;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins&display=swap">
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="timer">
+      <div class="controls">
+        <input id="duration" value="3" />
+        <div>
+          <button id="start"><i class="fas fa-play"></i></button>
+          <button id="pause"><i class="fas fa-pause"></i></button>
+        </div>
+      </div>
+      <svg class="dial">
+        <circle fill="transparent" stroke="green" stroke-width="15" r="190" cx="0" cy="200"
+          transform="rotate(-90 100 100)" />
+      </svg>
+      <h1>JS Made Timer Widget</h1>
+    </div>
+  </div>
+
+  <script>
+    class Timer {
+      constructor(durationInput, startButton, pauseButton, callbacks) {
+        this.durationInput = durationInput;
+        this.startButton = startButton;
+        this.pauseButton = pauseButton;
+        if (callbacks) {
+          this.onStart = callbacks.onStart;
+          this.onTick = callbacks.onTick;
+          this.onComplete = callbacks.onComplete;
+        }
+
+        this.startButton.addEventListener("click", this.start);
+        this.pauseButton.addEventListener("click", this.pause);
+      }
+
+      start = () => {
+        if (this.onStart) {
+          this.onStart(this.timeRemaining);
+        }
+        this.tick();
+        this.interval = setInterval(this.tick, 50);
+      };
+
+      pause = () => {
+        clearInterval(this.interval);
+      };
+
+      tick = () => {
+        if (this.timeRemaining <= 0) {
+          this.pause();
+          if (this.onComplete) {
+            this.onComplete();
+          }
+        } else {
+          this.timeRemaining = this.timeRemaining - 0.05;
+          if (this.onTick) {
+            this.onTick(this.timeRemaining);
+          }
+        }
+      };
+
+      get timeRemaining() {
+        return parseFloat(this.durationInput.value);
+      }
+
+      set timeRemaining(time) {
+        this.durationInput.value = time.toFixed(2);
+      }
+    }
+
+    const durationInput = document.querySelector("#duration");
+    const startButton = document.querySelector("#start");
+    const pauseButton = document.querySelector("#pause");
+    const circle = document.querySelector("circle");
+
+    const perimeter = circle.getAttribute("r") * 2 * Math.PI;
+    circle.setAttribute("stroke-dasharray", perimeter);
+
+    let duration;
+    const timer = new Timer(durationInput, startButton, pauseButton, {
+      onStart(totalDuration) {
+        duration = totalDuration;
+      },
+      onTick(timeRemaining) {
+        circle.setAttribute(
+          "stroke-dashoffset",
+          (perimeter * timeRemaining) / duration - perimeter
+        );
+      },
+      onComplete() {
+        console.log("Timer is completed");
+      },
+    });
+
+
+
+  </script>
+</body>
+
+</html>
